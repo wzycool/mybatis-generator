@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="${package}.dao.${modelName}Dao" >
+	
+    <resultMap id="BaseResultMap" type="${package}.entity.${modelName}" >
+        <id column="${idField}" property="${idFieldName}"/>
+        <#list columns as item>
+        <#if item.fieldName!=idFieldName>
+        <result column="${item.name}" property="${item.fieldName}" jdbcType="${item.type}" />
+        </#if>
+   		 </#list>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        <#assign sign=false>
+        <#list columns as item><#if sign==true>,</#if>${item.name}<#assign sign=true></#list>
+    </sql>
+
+    <sql id="Where_Clause">
+        <where>
+            1 = 1
+            <#list columns as item>
+              <if test="${item.fieldName} != null">
+                  AND ${item.name} = ${"#"}{${item.fieldName}}
+              </if>
+            </#list>
+        </where>
+    </sql>
+
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="${package}.entity.${modelName}" >
+        select
+        <include refid="Base_Column_List" />
+        from ${tableName}
+       <include refid="Where_Clause" />
+    </select>
+
+    <select id="selectListCount" resultType="java.lang.Integer" parameterType="${package}.entity.${modelName}" >
+        select count(1) from ${tableName}
+        <include refid="Where_Clause" />
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from ${tableName}
+        where id = ${"#"}{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from ${tableName}
+        where id = ${"#"}{id,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteSelective" parameterType="${package}.entity.${modelName}" >
+        delete from ${tableName}
+        <include refid="Where_Clause" />
+    </delete>
+
+    <insert id="insert" parameterType="${package}.entity.${modelName}" >
+        insert into ${tableName} (
+		<#list columns as item>${item.name}<#if item_index lt columns?size-1 >,</#if><#if item_index gt 7><#if item_index%8==0>
+		</#if></#if></#list>)
+        values (<#assign sign=false><#list columns as item><#if sign>,</#if>${"#"}{${item.fieldName},jdbcType=${item.type}}<#assign sign=true><#if item_index gt 7><#if item_index%8==0>
+        </#if></#if></#list>)
+    </insert>
+
+    <insert id="insertSelective" parameterType="${package}.entity.${modelName}" >
+        insert into ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <#list columns as item>
+            <if test="${item.fieldName} != null" >
+                ${item.name},
+            </if>
+        	</#list>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<#list columns as item>
+            <if test="${item.fieldName} != null" >
+                ${"#"}{${item.fieldName},jdbcType=${item.type}},
+            </if>
+			</#list>
+        </trim>
+    </insert>
+
+    <update id="updateSelectiveByPrimaryKey" parameterType="${package}.entity.${modelName}" >
+        update ${tableName}
+        <set>
+            <#list columns as item>
+            <if test="${item.fieldName} != null" >
+                ${item.name} = ${"#"}{${item.fieldName},jdbcType=${item.type}},
+            </if>
+			</#list>
+        </set>
+        where ${idField} = ${"#"}{${idFieldName}}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="${package}.entity.${modelName}" >
+        update ${tableName}
+        set
+            <#list columns as item>
+            ${item.name} = ${"#"}{${item.fieldName},jdbcType=VARCHAR}<#if item_index lt columns?size-1 >,</#if>
+            </#list>
+        where ${idField} = ${"#"}{${idFieldName}}
+    </update>
+</mapper>

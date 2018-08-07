@@ -1,0 +1,94 @@
+package ${package}.service.impl;
+
+import ${package}.entity.${modelName};
+import ${package}.dao.${modelName}Mapper;
+import ${package}.service.${modelName}Service;
+import ${package}.entity.${modelName}Example;
+import ${package}.dao.page.Page;
+import ${package}.util.StringUtil;
+import com.github.pagehelper.PageInfo;
+
+import java.util.List;
+import java.lang.Long;
+import java.lang.Integer;
+import java.util.Date;
+
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/**
+* ${modelRemark} Service
+* @author ${author}
+* @project ${project}
+* @date  ${now?datetime}
+*/
+@Service("${modelName?uncap_first}Service")
+public class ${modelName}ServiceImpl implements ${modelName}Service {
+
+	<#assign dao=modelName?uncap_first+"Dao" >
+	@Autowired
+	private ${modelName}Dao ${dao};
+
+
+	/**
+	 * 保存
+	 *
+	 * @param ${modelName?uncap_first}
+	 * @return
+	 */
+	public int save(${modelName} ${modelName?uncap_first}){
+
+		${modelName?uncap_first}.setCreateTime(new Date());
+
+		return ${dao}.insert(${modelName?uncap_first});
+	}
+
+	/**
+	 * 修改
+	 *
+	 * @param ${modelName?uncap_first}
+	 * @return
+	 */
+	public int updateByPrimaryKeySelective(${modelName} ${modelName?uncap_first}){
+
+        return ${dao}.updateByPrimaryKeySelective(${modelName?uncap_first});
+	}
+
+	/**
+	 * 根据id查询
+	 *
+	 * @param id
+	 * @return
+	 */
+	public ${modelName} selectByPrimaryKey(Long id){
+
+        return ${dao}.selectByPrimaryKey(id);
+	}
+
+	/**
+	 * 根据id删除
+	 *
+	 * @param id
+	 * @return
+	 */
+	public int deleteByPrimaryKey(Long id){
+
+        return ${dao}.deleteByPrimaryKey(id);
+	}
+
+	/**
+	 * 获取列表数据
+	 * @param pageNo
+	 * @param pageSize
+	 * @param ${modelName?uncap_first}
+	 * @return
+	 */
+	public PageInfo<${modelName}> getPageInfo(Integer pageIndex, Integer pageSize, ${modelName} ${modelName?uncap_first}){
+        Page page = PageHelper.startPage(pageIndex,pageSize);
+        PageHelper.orderBy("id desc");
+        List<${modelName}> list = ${dao}.selectList(${modelName?uncap_first});
+        PageInfo<${modelName}> pageInfo = new PageInfo<${modelName}>(list);
+		return pageInfo;
+	}
+
+}

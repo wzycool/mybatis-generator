@@ -1,0 +1,19 @@
+package ${package}.dao;
+
+import java.util.List;
+import ${package}.entity.${modelName};
+import ${package}.dao.page.Page;
+import ${package}.entity.${modelName}Example;
+import org.apache.ibatis.annotations.Param;
+
+/**
+* ${modelRemark}
+* @author ${author}
+* @project ${project}
+* @date  ${now?datetime}
+*/
+public interface ${modelName}Dao extends BaseDao{
+
+}
+
+
