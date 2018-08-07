@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
 * @project ${project}
 * @date  ${now?datetime}
 */
-public interface ${modelName}Dao extends BaseDao{
+public interface ${modelName}Dao extends BaseDao<${modelName}>{
 
 }
 

@@ -285,11 +285,12 @@ public class BuildHelper {
 
 		Map<String, Object> rs = new HashMap<String, Object>();
 
-		String[] longs = new String[] { "TINYINT", "SMALLINT", "MEDIUMINT", "BIGINT" };
+		String[] longs = new String[] { "SMALLINT", "MEDIUMINT", "BIGINT" };
 		String[] strings = new String[] { "VARCHAR", "CHAR", "TEXT", "MEDIUMTEXT" };
-		String[] ints = new String[] {"INTEGER","INT", "BIT", "BOOLEAN" };
+		String[] ints = new String[] { "INTEGER","INT", "BIT", "BOOLEAN" };
 		String[] doubles = new String[] { "FLOAT", "DOUBLE", "DECIMAL" };
 		String[] dates = new String[] { "DATE", "TIME", "DATETIME", "TIMESTAMP", "YEAR" };
+		String[] bytes = new String[] { "TINYINT"};
 
 		if (Arrays.asList(longs).contains(type)) {
 			rs.put("package", "java.lang.Long");
@@ -306,6 +307,9 @@ public class BuildHelper {
 		} else if (Arrays.asList(dates).contains(type)) {
 			rs.put("package", "java.util.Date");
 			rs.put("typeName", "Date");
+		} else if (Arrays.asList(bytes).contains(type)){
+			rs.put("package", "java.lang.Byte");
+			rs.put("typeName", "Byte");
 		} else {
 			rs.put("package", "java.lang.Object");
 			rs.put("typeName", "Object");
