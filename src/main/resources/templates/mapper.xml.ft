@@ -47,6 +47,14 @@
         where id = ${"#"}{id,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectOne" resultType="BaseResultMap" parameterType="">
+        select
+        <include refid="Base_Column_List" />
+        from ${tableName}
+        <include refid="Where_Clause" />
+        limit 0,1
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
         delete from ${tableName}
         where id = ${"#"}{id,jdbcType=VARCHAR}

@@ -22,4 +22,6 @@ public interface BaseDao<T> {
     void insertSelective(T record);
 
     void updateSelectiveByPrimaryKey(T record);
+
+    void selectOne(T record);
 }
