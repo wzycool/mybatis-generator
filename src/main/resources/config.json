@@ -1,18 +1,18 @@
 {
 	"package":"com.hshc.shc.ics",
 	"jdbc":{
-		"url":"jdbc:mysql://192.168.100.30:3306/hshc_ics?useUnicode=true&characterEncoding=UTF8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull",
-		"username":"test",
-		"password":"HSHCtest#2018"
+		"url":"数据库链接",
+		"username":"用户名",
+		"password":"密码"
 	},
 	"tableMapping":{
-		"t_cancellation":{
-			"name":"Cancellation",
-			"remark":"系统资源模块"
+		"school_statistics":{
+			"name":"SchoolStatistics",
+			"remark":"学校人数记录统计表"
 		}
 	},
 	"author":"zhengyi.wang",
-	"basePath":"D:/model/",
+	"basePath":"/Users/zy/Documents/model/",
 	"templates":[{
 		"template":"types.ft",
 		"outSuffix":"Types.txt",
